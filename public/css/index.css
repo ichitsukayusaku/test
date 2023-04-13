@@ -1,0 +1,49 @@
+.search, .search__name {
+    margin-left: 225px;
+}
+
+.search {
+    margin-top: 20px;
+}
+select {
+    height: 30px;
+    width: 250px;
+}
+.table__list {
+    width: 1000px;
+    margin: auto;
+    font-size: large;
+}
+
+th {
+    padding: 10px;
+}
+
+td {
+   padding: 5px; 
+}
+
+th, td {
+    text-align: center;
+}
+
+table {
+    border: 1px solid;
+}
+
+table tr:nth-child(even) {
+    background-color: rgba(233, 237, 238, 0.676);
+}
+
+.register {
+    margin: 20px 0 20px 225px;
+}
+
+.btn__detail {
+    background-color: rgb(163, 210, 240);
+
+}
+
+.btn__destroy {
+    background-color: rgb(231, 80, 80);
+}

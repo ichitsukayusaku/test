@@ -1,0 +1,36 @@
+body {
+    text-align: center;
+}
+
+.header__2 {
+    margin: 10px;
+}
+
+.form__control {
+    width: 300px;
+    margin: 15px;
+}
+
+.form__control2 {
+    width: 300px;
+    margin: 15px;
+    height: 30px;
+}
+
+.form__control3 {
+    margin-left: 17px;
+    width: 300px;
+}
+
+.form__group2 {
+    margin-right: 17px;
+}
+
+.form__group3 {
+    font-size: 20px;
+}
+
+.btn-default {
+    background-color: rgb(225, 230, 230);
+    margin: 20px;
+}

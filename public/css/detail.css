@@ -1,0 +1,16 @@
+body {
+    text-align: center;
+}
+
+.header__detail {
+    margin: 20px;
+}
+.table__list {
+    width: 800px;
+    margin: auto;
+    font-size: 20px;
+}
+
+.returnbtn {
+    margin: 20px;
+}
