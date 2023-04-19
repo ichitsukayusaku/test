@@ -10,7 +10,7 @@
         <form action="{{ route('list') }}" method="GET">
             @csrf
             <input type="text" name="keyword" size="30" placeholder="商品名を入力">
-            <select class="search__select" name='company_id'>
+            <select class="search__select" name="company_id">
                 @foreach ($companies as $company)
                 <option value="" selected hidden>選択してください</option>
                 <option value="{{ $company->id }}">{{ $company->company_name }}</option>

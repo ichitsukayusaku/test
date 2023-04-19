@@ -30,18 +30,11 @@ class TestController extends Controller
         //検索フォーム
         $keyword = $request->input('keyword');
         $company_id = $request->input('company_id');
-        $query = Product::query();
 
-        if(!empty($keyword)) {
-            $query->where('name', 'like', "%{$keyword}%");
-        }
-
-        if(!empty($company_id)) {
-            $query->where('company_id', "{$company_id}");
-        }
-
-        $products = $query->get();
-        return view('index',compact('products','companies','keyword'));
+        $search = new Product;
+        $products = $search->search($keyword, $company_id);
+       
+        return view('index',compact('products','companies'));
     }
 
     /**
@@ -128,19 +121,23 @@ class TestController extends Controller
      * @param  \App\Product  $test
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product, $id)
+    public function update(Request $request, $id)
     {
         //レコードの編集
-        $model = Product::find($id);
-        $model->name = $request->input(["name"]);
-        $model->company_id = $request->input(["company_id"]);
-        $model->price = $request->input(["price"]);
-        $model->stock = $request->input(["stock"]);
-        $model->comment = $request->input(["comment"]);
-        
-        $model->save();
+        DB::BeginTransaction();
 
-        return redirect(route('update',['id'=>$model->id]));
+        try {
+            $data = $request->only(['name', 'company_id', 'price', 'stock', 'comment']);
+    
+            $product = new Product();
+            $product->recordUpdate($id, $data);
+            DB::commit();
+        } catch (\Exseption $e) {
+            DB::rollback();
+            return back();
+        }
+        
+        return redirect(route('update',['id'=>$id]));
     }
 
     /**
