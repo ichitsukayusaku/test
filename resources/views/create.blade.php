@@ -42,7 +42,7 @@
                 イメージ写真:<input type="file" name="image" placeholder="ファイルを選択">
             </div>
             <div class="register__btn">
-            <button class="btn-default">登録</button>
+                <button class="btn-default">登録</button>
             </div>
         </div>     
     </form>    

@@ -16,10 +16,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', 'TestController@index')->name('list');
-
+//検索用
+Route::get('/home/search','TestController@search')->name('search');
 Route::get('/home/create', 'TestController@create')->name('create');
 Route::post('/home/create', 'TestController@store')->name('store');
-Route::post('/home/destroy{id}', 'TestController@destroy')->name('destroy');
-Route::get('/home/detail{id}', 'TestController@show')->name('detail');
-Route::get('/home/detail/edit{id}', 'TestController@edit')->name('edit');
-Route::post('/home/detail/edit{id}', 'TestController@update')->name('update');
+Route::post('/home/destroy/{id}', 'TestController@destroy')->name('destroy');
+Route::get('/home/detail/{id}', 'TestController@show')->name('detail');
+Route::get('/home/detail/edit/{id}', 'TestController@edit')->name('edit');
+Route::post('/home/detail/edit/{id}', 'TestController@update')->name('update');

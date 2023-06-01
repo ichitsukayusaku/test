@@ -9,6 +9,7 @@ use Applications\MAMP\Htdocs\Test\Resources\Views;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
+use Kyslik\ColumnSortable\Sortable;
 
 class TestController extends Controller
 {
@@ -30,10 +31,14 @@ class TestController extends Controller
         //検索フォーム
         $keyword = $request->input('keyword');
         $company_id = $request->input('company_id');
+        $max_price = $request->input('max_price');
+        $min_price = $request->input('min_price');
+        $max_stock = $request->input('max_stock');
+        $min_stock = $request->input('min_stock');
 
         $search = new Product;
-        $products = $search->search($keyword, $company_id);
-       
+        $products = $search->search($keyword, $company_id, $max_price, $min_price, $max_stock, $min_stock);
+        
         return view('index',compact('products','companies'));
     }
 
@@ -67,19 +72,17 @@ class TestController extends Controller
         ]);
     
      //DB新規登録処理
-        $model = new Product();
-        $model->name = $request->input(["name"]);
-        $model->price = $request->input(["price"]);
-        $model->stock = $request->input(["stock"]);
-        $model->comment = $request->input(["comment"]);
-        $model->company_id = $request->input(["company_id"]);
-     //画像の保存
-        $file_name = $request->file('image')->getClientOriginalName();
-        if (!empty($file_name)) {
-            $request->file('image')->storeAs('/public', $file_name);
-            $model->image ='storage/' . $file_name;
+        DB::BeginTransaction();
+
+        try {
+            $model4 = new Product;
+            $model4->newRecord($request);
+            DB::commit();
+        } catch(\Exseption $e) {
+            DB::rollback();
+            return back();
         }
-        $model->save();
+
         return redirect(route('store'));
     }
 
@@ -139,19 +142,26 @@ class TestController extends Controller
         
         return redirect(route('update',['id'=>$id]));
     }
-
+ 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Product  $test
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //レコードの削除
-        $products2 = Product::find($id);
-        $products2->delete();
+        //レコード削除
+        DB::BeginTransaction();
 
-        return redirect(route('list'));
+        try {
+            $product2 = Product::find($request->id);
+            $product2->delete();
+            DB::commit();
+            return response()->json('成功');
+        } catch (\Exseption $e) {
+            DB::rollback();
+            return response()->json('失敗')->back();
+        }
     }
 }

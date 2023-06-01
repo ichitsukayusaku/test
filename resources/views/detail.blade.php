@@ -28,7 +28,7 @@
             <td>
                 <form action="{{ route('edit', ['id'=>$items->id]) }}"method="GET">
                     @csrf
-                    <button class="btn__edit" onclick="location.href='home/detail/edit{id}'">編集</button>
+                    <button class="btn__edit" onclick="location.href='home/detail/edit/{id}'">編集</button>
                 </form>
             </td>
         </tr>

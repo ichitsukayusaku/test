@@ -51,7 +51,7 @@
     </form>
     <form action="{{ route('detail', ['id'=>$items2->id]) }}"method="GET">
         @csrf
-        <button class="return__edit" onclick="location.href='/home/detail{id}'">戻る</button>
+        <button class="return__edit" onclick="location.href='/home/detail/{id}'">戻る</button>
     </form>    
 </body>
 @endsection
